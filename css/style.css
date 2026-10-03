@@ -1,0 +1,162 @@
+/* =========================================================
+   Darn Computers - Custom Stylesheet
+   Font imports + preloader / reveal / small base overrides
+   that Tailwind utility classes don't cleanly cover.
+   ========================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap");
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  color: #1c1917;
+  background-color: #f8fafc;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-heading {
+  font-family: "Baloo 2", sans-serif;
+}
+
+/* ---------------------------------------------------------
+   PRELOADER - logo chip + looping red progress bar.
+   main.js adds "preloader-done" once the page has loaded,
+   which fades the whole overlay out then removes it.
+   --------------------------------------------------------- */
+#preloader {
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
+#preloader.preloader-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-logo {
+  animation: preloader-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes preloader-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+}
+
+.preloader-bar {
+  animation: preloader-slide 1.2s ease-in-out infinite;
+}
+
+@keyframes preloader-slide {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(360%);
+  }
+}
+
+/* ---------------------------------------------------------
+   SCROLL REVEAL - elements fade/rise in once when they
+   enter the viewport (IntersectionObserver in main.js).
+   --------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.reveal.reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger helpers */
+.reveal-d1 {
+  transition-delay: 0.12s;
+}
+
+.reveal-d2 {
+  transition-delay: 0.24s;
+}
+
+.reveal-d3 {
+  transition-delay: 0.36s;
+}
+
+/* Hero content entrances (play once on load, no JS needed) */
+.hero-enter {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: hero-rise 0.8s ease-out forwards;
+}
+
+@keyframes hero-rise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .hero-enter {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .preloader-logo,
+  .preloader-bar {
+    animation: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Subtle lift on interactive cards/rows */
+.card-lift {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -6px rgba(23, 20, 18, 0.12);
+}
+
+/* Keep focus states visible/accessible against both dark and white backgrounds */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+/* Full-bleed photo sections: an <img> absolutely positioned behind content,
+   topped with this gradient so white/light text stays readable while the
+   brand red still bleeds through at one corner. */
+.bg-photo-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(23, 20, 18, 0.93) 0%,
+    rgba(23, 20, 18, 0.82) 55%,
+    rgba(198, 37, 0, 0.55) 100%
+  );
+}
