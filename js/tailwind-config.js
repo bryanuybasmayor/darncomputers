@@ -20,7 +20,7 @@ tailwind.config = {
       },
       fontFamily: {
         // Rounded display sans for headings - friendly/modern, still sans-serif.
-        heading: ["'Baloo 2'", "sans-serif"],
+        heading: ["'Nunito'", "sans-serif"],
         body: ["'Inter'", "sans-serif"],
       },
     },
